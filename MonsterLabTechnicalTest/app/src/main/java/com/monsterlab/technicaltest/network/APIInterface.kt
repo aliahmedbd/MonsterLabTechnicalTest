@@ -12,6 +12,5 @@ interface APIInterface {
     @GET(URL.GET_IMAGE_LIST)
     suspend fun getImageList(
         @Query("page") page: Int?,
-        @Query("limit") limit: Int?
-    ): Call<List<Images>>
+    ): List<Images>
 }
