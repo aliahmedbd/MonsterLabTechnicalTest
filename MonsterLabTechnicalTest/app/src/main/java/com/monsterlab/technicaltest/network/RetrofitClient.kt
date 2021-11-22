@@ -29,7 +29,6 @@ object RetrofitClient {
         okhttpClient.connectTimeout(60, TimeUnit.SECONDS)
         okhttpClient.readTimeout(30, TimeUnit.SECONDS)
 
-
         getInterceptor()?.let { okhttpClient.addInterceptor(it) }
 
         Retrofit.Builder()
@@ -43,7 +42,6 @@ object RetrofitClient {
             .build()
             .create(APIInterface::class.java)
     }
-
 
     private fun getInterceptor(): Interceptor? {
         return object : Interceptor {

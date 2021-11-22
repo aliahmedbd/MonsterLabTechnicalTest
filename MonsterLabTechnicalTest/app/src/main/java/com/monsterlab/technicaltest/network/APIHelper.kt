@@ -5,5 +5,4 @@ import retrofit2.Call
 
 interface APIHelper {
     fun getImageList(page : Int?, limit : Int?): Call<List<Images>>
-
 }

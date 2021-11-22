@@ -8,8 +8,9 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface APIInterface {
+
     @GET(URL.GET_IMAGE_LIST)
-    fun getImageList(
+    suspend fun getImageList(
         @Query("page") page: Int?,
         @Query("limit") limit: Int?
     ): Call<List<Images>>

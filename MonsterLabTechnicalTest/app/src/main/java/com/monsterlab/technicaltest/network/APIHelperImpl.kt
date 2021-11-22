@@ -11,5 +11,4 @@ class APIHelperImpl : APIHelper {
         return apiService.getImageList(page, limit)
     }
 
-
 }
