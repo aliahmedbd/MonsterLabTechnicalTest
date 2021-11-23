@@ -2,6 +2,7 @@ package com.monsterlab.technicaltest.Common
 
 import com.monsterlab.technicaltest.BuildConfig
 import com.monsterlab.technicaltest.network.APIInterface
+import com.monsterlab.technicaltest.network.ApiHelperImpl
 import com.monsterlab.technicaltest.network.URL
 import dagger.Module
 import dagger.Provides
@@ -44,4 +45,8 @@ class ApplicationComponent {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit) = retrofit.create(APIInterface::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAPIHelper(apiInterface: APIInterface) = ApiHelperImpl(apiInterface)
 }

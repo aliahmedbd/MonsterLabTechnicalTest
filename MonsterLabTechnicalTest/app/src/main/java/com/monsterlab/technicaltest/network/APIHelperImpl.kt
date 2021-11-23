@@ -1,4 +1,4 @@
-package com.example.imagegallery.network
+package com.monsterlab.technicaltest.network
 
 import com.monsterlab.technicaltest.model.ImagesModel
 import com.monsterlab.technicaltest.network.APIHelper
