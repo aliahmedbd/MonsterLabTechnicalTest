@@ -1,8 +1,7 @@
 package com.monsterlab.technicaltest.network
 
-import com.monsterlab.technicaltest.model.Images
-import retrofit2.Call
+import com.monsterlab.technicaltest.model.ImagesModel
 
 interface APIHelper {
-    suspend fun getImageList(page : Int?): List<Images>
+    suspend fun getImageList(page : Int?): List<ImagesModel>
 }

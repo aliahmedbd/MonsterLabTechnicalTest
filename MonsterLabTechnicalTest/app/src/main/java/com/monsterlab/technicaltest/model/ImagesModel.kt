@@ -2,7 +2,7 @@ package com.monsterlab.technicaltest.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Images (
+data class ImagesModel (
 	@SerializedName("id") val id : Int,
 	@SerializedName("author") val author : String,
 	@SerializedName("width") val width : Int,
