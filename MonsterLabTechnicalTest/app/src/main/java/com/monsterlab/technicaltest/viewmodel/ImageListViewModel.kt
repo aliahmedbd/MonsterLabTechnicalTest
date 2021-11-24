@@ -10,15 +10,19 @@ import com.monsterlab.technicaltest.model.ImagesModel
 import com.monsterlab.technicaltest.network.APIHelper
 import com.monsterlab.technicaltest.network.APIInterface
 import com.monsterlab.technicaltest.repository.ImageListPagingSource
+import com.monsterlab.technicaltest.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 @HiltViewModel
 class ImageListViewModel @Inject constructor(private val apiInterface: APIInterface) : ViewModel() {
 
     val getAllImages: Flow<PagingData<ImagesModel>> =
-        Pager(config = PagingConfig(10, enablePlaceholders = false)) {
+        Pager(config = PagingConfig(Constants.IMAGE_PAGE_COUNT, enablePlaceholders = false)) {
             ImageListPagingSource(apiInterface)
         }.flow.cachedIn(viewModelScope)
 

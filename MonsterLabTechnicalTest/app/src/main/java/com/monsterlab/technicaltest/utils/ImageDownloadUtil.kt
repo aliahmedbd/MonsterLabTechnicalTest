@@ -12,6 +12,9 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.OutputStream
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 class ImageDownloadUtil {
 
     public fun addImageToGallery(fileName: String, bitmap: Bitmap, ctx: Context) {

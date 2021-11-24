@@ -13,6 +13,9 @@ import com.facebook.shimmer.ShimmerDrawable
 import com.monsterlab.technicaltest.databinding.ItemImageListBinding
 import com.monsterlab.technicaltest.model.ImagesModel
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 class ImageListAdapter(private val context: Context, public val itemClick: (ImagesModel) -> Unit) :
     PagingDataAdapter<ImagesModel, ImageListAdapter.GalleryViewHolder>(Diff()) {
 

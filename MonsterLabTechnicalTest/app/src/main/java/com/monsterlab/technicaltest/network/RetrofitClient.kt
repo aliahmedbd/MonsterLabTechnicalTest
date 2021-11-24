@@ -12,6 +12,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 object RetrofitClient {
     private const val BASE_URL = URL.BASE_URL
 

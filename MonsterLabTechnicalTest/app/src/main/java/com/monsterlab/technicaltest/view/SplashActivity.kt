@@ -7,6 +7,9 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import com.monsterlab.technicaltest.R
 import com.monsterlab.technicaltest.databinding.ActivitySplashBinding
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding

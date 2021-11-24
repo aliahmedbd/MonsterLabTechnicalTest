@@ -2,6 +2,10 @@ package com.monsterlab.technicaltest.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
+
 data class ImagesModel (
 	@SerializedName("id") val id : Int,
 	@SerializedName("author") val author : String,

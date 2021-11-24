@@ -8,6 +8,9 @@ import com.monsterlab.technicaltest.utils.Constants
 import retrofit2.HttpException
 import java.io.IOException
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 class ImageListPagingSource constructor(private val apiInterface: APIInterface) :
     PagingSource<Int, ImagesModel>() {
     override fun getRefreshKey(state: PagingState<Int, ImagesModel>): Int? {
@@ -21,7 +24,7 @@ class ImageListPagingSource constructor(private val apiInterface: APIInterface) 
             LoadResult.Page(
                 response,
                 prevKey = if (pageIndex == Constants.IMAGE_PAGE_COUNT) null else pageIndex - 1,
-                nextKey = if (response.isEmpty()) null else pageIndex + 1
+                nextKey = if (response.isEmpty() || pageIndex == Constants.TOTAL_PAGE_COUNT) null else pageIndex + 1
             )
 
         } catch (exception: IOException) {

@@ -40,8 +40,11 @@ import android.R
 import android.os.Environment
 import androidx.annotation.Nullable
 import androidx.transition.Transition
+import com.monsterlab.technicaltest.utils.ImageDownloadUtil
 
-
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 @AndroidEntryPoint
 class ImageListFragment : Fragment() {
 
@@ -92,7 +95,7 @@ class ImageListFragment : Fragment() {
         }
     }
 
-    fun verifyPermissions(): Boolean? {
+    private fun verifyPermissions(): Boolean? {
 
         // This will return the current Status
         val permissionExternalMemory =
@@ -109,30 +112,7 @@ class ImageListFragment : Fragment() {
         return true
     }
 
-    private fun saveImage(image: Bitmap, storageDir: File, imageFileName: String) {
-        var successDirCreated = false
-        if (!storageDir.exists()) {
-            successDirCreated = storageDir.mkdir()
-        }
-        if (successDirCreated) {
-            val imageFile = File(storageDir, imageFileName)
-            val savedImagePath: String = imageFile.absolutePath
-            try {
-                val fOut: OutputStream = FileOutputStream(imageFile)
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
-                fOut.close()
-                Toast.makeText(context, "Image Saved!", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Toast.makeText(context, "Error while saving image!", Toast.LENGTH_SHORT)
-                    .show()
-                e.printStackTrace()
-            }
-        } else {
-            Toast.makeText(context, "Failed to make folder!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun downloadImage(imageURL: String) {
+    private fun downloadImage(imageURL: String) {
         if (!verifyPermissions()!!) {
             Toast.makeText(
                 context,
@@ -153,7 +133,8 @@ class ImageListFragment : Fragment() {
                 ) {
                     val bitmap = (resource as BitmapDrawable).bitmap
                     Toast.makeText(context, "Saving Image...", Toast.LENGTH_SHORT).show()
-                    saveImage(bitmap, dir, fileName)
+                  //  saveImage(bitmap, dir, fileName)
+                    context?.let { ImageDownloadUtil().addImageToGallery(fileName,bitmap, it) }
                 }
 
                 override fun onLoadCleared(@Nullable placeholder: Drawable?) {}

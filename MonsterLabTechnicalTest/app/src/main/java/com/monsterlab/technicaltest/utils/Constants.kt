@@ -1,5 +1,9 @@
 package com.monsterlab.technicaltest.utils
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
 object Constants {
-    const val IMAGE_PAGE_COUNT = 1
+    var IMAGE_PAGE_COUNT = 10
+    var TOTAL_PAGE_COUNT = 10
 }

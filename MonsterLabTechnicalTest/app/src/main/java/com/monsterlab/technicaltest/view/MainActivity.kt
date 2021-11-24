@@ -13,6 +13,10 @@ import com.monsterlab.technicaltest.R
 import com.monsterlab.technicaltest.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
+ */
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
