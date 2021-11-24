@@ -33,7 +33,7 @@ Here is the list of technologies are used to build this application:
         }
 ```
 6. <b>Jetpack Component - Pagging 3</b> : Why pagging is required this application, because the image list has a massive amount of data and If I wanted to fetch these data ata single time it will take huge amount of time. So that pagination is required, the jetpack component which is Pagging3 is one of the most used jetpack component to perform the paginated data in the `RecyclerView`. It also better with Kotlin Coroutine and Kotlin Low. For that need to create Pagging adapter where we can detect the Success and Error state.
-7.  Hilt (Dependancy Injection used)
+7.  <b>Hilt (Dependancy Injection used)</b> 
 10.  <b>Jetpack Component - Navigation</b> : Navigation is used for generate the  `BottomNavigationView` , where I can see the clear view visibilty on the Android studio, here is the screenshot.
 
 
