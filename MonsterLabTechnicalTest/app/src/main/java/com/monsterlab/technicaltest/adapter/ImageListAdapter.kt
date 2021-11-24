@@ -13,14 +13,15 @@ import com.facebook.shimmer.ShimmerDrawable
 import com.monsterlab.technicaltest.databinding.ItemImageListBinding
 import com.monsterlab.technicaltest.model.ImagesModel
 
-class ImageListAdapter (private val context: Context):
+class ImageListAdapter(private val context: Context, public val itemClick: (ImagesModel) -> Unit) :
     PagingDataAdapter<ImagesModel, ImageListAdapter.GalleryViewHolder>(Diff()) {
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         val image = getItem(position)
         if (image != null) {
-            holder.binds(image)
+            holder.binds(image, itemClick)
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder =
@@ -39,7 +40,7 @@ class ImageListAdapter (private val context: Context):
         private val binding: ItemImageListBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun binds(image: ImagesModel) {
+        fun binds(image: ImagesModel, itemClick: (ImagesModel) -> Unit) {
             val shimmer =
                 Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
                     .setDuration(1800) // how long the shimmering animation takes to do one full sweep
@@ -49,7 +50,6 @@ class ImageListAdapter (private val context: Context):
                     .setAutoStart(true)
                     .build()
 
-// This is the placeholder for the imageView
             val shimmerDrawable = ShimmerDrawable().apply {
                 setShimmer(shimmer)
             }
@@ -59,6 +59,10 @@ class ImageListAdapter (private val context: Context):
                     .placeholder(shimmerDrawable)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(this.image)
+                txtAuthorName.text = image.author
+                imgDownload.setOnClickListener {
+                    itemClick.invoke(image)
+                }
             }
         }
     }

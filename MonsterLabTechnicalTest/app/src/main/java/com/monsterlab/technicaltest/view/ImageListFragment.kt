@@ -1,5 +1,6 @@
 package com.monsterlab.technicaltest.view
 
+import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,31 @@ import com.monsterlab.technicaltest.databinding.FragmentImageListBinding
 import com.monsterlab.technicaltest.viewmodel.ImageListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import androidx.core.app.ActivityCompat
+
+import android.content.pm.PackageManager
+import android.widget.Toast
+
+import android.graphics.Bitmap
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.lang.Exception
+import android.graphics.drawable.Drawable
+
+import android.graphics.drawable.BitmapDrawable
+
+import androidx.annotation.NonNull
+
+import com.bumptech.glide.request.target.CustomTarget
+
+import com.bumptech.glide.Glide
+
+import android.R
+import android.os.Environment
+import androidx.annotation.Nullable
+import androidx.transition.Transition
+
 
 @AndroidEntryPoint
 class ImageListFragment : Fragment() {
@@ -31,7 +57,13 @@ class ImageListFragment : Fragment() {
 
         binding = FragmentImageListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        imageAdapter = context?.let { ImageListAdapter(it) }!!
+        imageAdapter = context?.let {
+            ImageListAdapter(it) { it ->
+                if (it.download_url.isNotEmpty()) {
+                    downloadImage(it.download_url)
+                }
+            }
+        }!!
         initRecyclerview()
 
         lifecycleScope.launchWhenStarted {
@@ -58,5 +90,81 @@ class ImageListFragment : Fragment() {
                         loadStates.append.endOfPaginationReached && imageAdapter.itemCount < 1
             }
         }
+    }
+
+    fun verifyPermissions(): Boolean? {
+
+        // This will return the current Status
+        val permissionExternalMemory =
+            ActivityCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        if (permissionExternalMemory != PackageManager.PERMISSION_GRANTED) {
+            val STORAGE_PERMISSIONS = arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            // If permission not granted then ask for permission real time.
+            ActivityCompat.requestPermissions(activity!!, STORAGE_PERMISSIONS, 1)
+            return false
+        }
+        return true
+    }
+
+    private fun saveImage(image: Bitmap, storageDir: File, imageFileName: String) {
+        var successDirCreated = false
+        if (!storageDir.exists()) {
+            successDirCreated = storageDir.mkdir()
+        }
+        if (successDirCreated) {
+            val imageFile = File(storageDir, imageFileName)
+            val savedImagePath: String = imageFile.absolutePath
+            try {
+                val fOut: OutputStream = FileOutputStream(imageFile)
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
+                fOut.close()
+                Toast.makeText(context, "Image Saved!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error while saving image!", Toast.LENGTH_SHORT)
+                    .show()
+                e.printStackTrace()
+            }
+        } else {
+            Toast.makeText(context, "Failed to make folder!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun downloadImage(imageURL: String) {
+        if (!verifyPermissions()!!) {
+            Toast.makeText(
+                context,
+                "Please accept the external storage permission",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        val dirPath: String = Environment.getExternalStorageDirectory().absolutePath
+            .toString() + "/" + getString(com.monsterlab.technicaltest.R.string.app_name) + "/"
+        val dir = File(dirPath)
+        val fileName = imageURL.substring(imageURL.lastIndexOf('/') + 1)
+        Glide.with(this)
+            .load(imageURL)
+            .into(object : CustomTarget<Drawable?>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: com.bumptech.glide.request.transition.Transition<in Drawable?>?
+                ) {
+                    val bitmap = (resource as BitmapDrawable).bitmap
+                    Toast.makeText(context, "Saving Image...", Toast.LENGTH_SHORT).show()
+                    saveImage(bitmap, dir, fileName)
+                }
+
+                override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
+                override fun onLoadFailed(@Nullable errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    Toast.makeText(
+                        context,
+                        "Failed to Download Image! Please try again later.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 }
