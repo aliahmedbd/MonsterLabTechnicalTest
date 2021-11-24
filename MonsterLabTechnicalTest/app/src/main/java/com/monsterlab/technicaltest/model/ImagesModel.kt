@@ -12,5 +12,6 @@ data class ImagesModel (
 	@SerializedName("width") val width : Int,
 	@SerializedName("height") val height : Int,
 	@SerializedName("url") val url : String,
-	@SerializedName("download_url") val download_url : String
+	@SerializedName("download_url") val download_url : String,
+	@SerializedName("click_type") var clickType : String
 )

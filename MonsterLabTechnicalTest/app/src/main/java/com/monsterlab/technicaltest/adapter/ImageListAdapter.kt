@@ -64,6 +64,12 @@ class ImageListAdapter(private val context: Context, public val itemClick: (Imag
                     .into(this.image)
                 txtAuthorName.text = image.author
                 imgDownload.setOnClickListener {
+                    image.clickType = "download"
+                    itemClick.invoke(image)
+                }
+
+                imgShare.setOnClickListener {
+                    image.clickType = "share"
                     itemClick.invoke(image)
                 }
             }

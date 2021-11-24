@@ -23,9 +23,19 @@
         android:text="Author name"
         android:textColor="@color/text_color"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/imgDownload"
+        app:layout_constraintEnd_toStartOf="@+id/imgShare"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAuthorHeader" />
+
+    <ImageView
+        android:id="@+id/imgShare"
+        android:layout_width="23sp"
+        android:layout_height="23sp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/share"
+        app:layout_constraintEnd_toStartOf="@+id/imgDownload"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
         android:id="@+id/imgDownload"

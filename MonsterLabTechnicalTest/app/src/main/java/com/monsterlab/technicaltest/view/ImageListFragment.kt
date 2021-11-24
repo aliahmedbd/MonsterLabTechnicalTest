@@ -41,6 +41,8 @@ import android.os.Environment
 import androidx.annotation.Nullable
 import androidx.transition.Transition
 import com.monsterlab.technicaltest.utils.ImageDownloadUtil
+import android.content.Intent
+
 
 /**
  * Created by Ali Ahmed, mail: aliahmedaiub@gmail.com
@@ -62,8 +64,12 @@ class ImageListFragment : Fragment() {
         val root: View = binding.root
         imageAdapter = context?.let {
             ImageListAdapter(it) { it ->
-                if (it.download_url.isNotEmpty()) {
-                    downloadImage(it.download_url)
+                if (it.clickType == "download") {
+                    if (it.download_url.isNotEmpty()) {
+                        downloadImage(it.download_url)
+                    }
+                } else {
+                    shareContent(it.download_url)
                 }
             }
         }!!
@@ -133,8 +139,8 @@ class ImageListFragment : Fragment() {
                 ) {
                     val bitmap = (resource as BitmapDrawable).bitmap
                     Toast.makeText(context, "Saving Image...", Toast.LENGTH_SHORT).show()
-                  //  saveImage(bitmap, dir, fileName)
-                    context?.let { ImageDownloadUtil().addImageToGallery(fileName,bitmap, it) }
+                    //  saveImage(bitmap, dir, fileName)
+                    context?.let { ImageDownloadUtil().addImageToGallery(fileName, bitmap, it) }
                 }
 
                 override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
@@ -147,5 +153,18 @@ class ImageListFragment : Fragment() {
                     ).show()
                 }
             })
+    }
+
+    private fun shareContent(url: String) {
+        try {
+            val share = Intent(Intent.ACTION_SEND)
+            share.type = "text/plain"
+            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+            share.putExtra(Intent.EXTRA_SUBJECT, "Share Image")
+            share.putExtra(Intent.EXTRA_TEXT, url)
+            startActivity(Intent.createChooser(share, "Share Image"))
+        } catch (e: Exception) {
+
+        }
     }
 }
